@@ -1,0 +1,21 @@
+<ion-view view-title="Recientes">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="reciente in recientes" type="item-text-wrap" href="#/tab/map/{{reciente.id}}">
+          <div  class="category-icon-logo color-{{reciente.categoria}}">
+              <div class="icon-algins {{reciente.icono}}"></div>
+          </div>
+            <h2>{{reciente.name}}</h2>
+            <p>{{reciente.lastText}}</p>
+            <p>{{reciente.fecha}}</p>
+            <i class="icon ion-chevron-right icon-accessory"></i>
+        <ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+    <div class="add-icon">
+        <div class="icon-add-style ion-plus-round"></div>
+    </div> 
+</ion-view>
