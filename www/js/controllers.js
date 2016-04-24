@@ -214,10 +214,27 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('MapCtrl', function($scope, $stateParams, $cordovaGeolocation, $ionicPopup, $cordovaCamera, $stateParams, Alerts) {
+.controller('MapCtrl', function($scope, $state, $cordovaGeolocation, $ionicModal, $ionicPopup, $cordovaCamera, $cordovaSocialSharing, $stateParams, Alerts) {
     var options = {timeout: 10000, enableHighAccuracy: true};
+    $scope.data = {};
     $scope.imagen = '';
     $scope.color  = '';
+    
+    $scope.goBack = function(){
+      $state.go('tab.recientes');
+    }
+    
+    $ionicModal.fromTemplateUrl('templates/modal-info.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+
+      
+      // Perform the login action when the user submits the login form
+      $scope.doLogin = function() {
+          
+      };    
     
     function color(id){
         switch(id){
@@ -245,6 +262,30 @@ angular.module('starter.controllers', [])
                 return 'img/deforestacion-marker.png';
             break;    
         }
+    }
+    
+     function iconosLogo(id){
+        switch(id){
+            case 2:
+                return 'ion-ios-paw';
+            break;
+            case 1:
+                return 'ion-waterdrop';
+            break;
+            case 3:
+                return 'fa fa-tree';
+            break;    
+        }
+    }
+    
+    $scope.twitterShare = function(){
+        $cordovaSocialSharing
+        .shareViaTwitter($scope.data.body+" via #enGeoy" , $scope.data.img , null)
+        .then(function(result) {
+          // Success!
+        }, function(err) {
+          // An error occurred. Show a message to the user
+        });
     }
     
     Alerts.get($stateParams.mapId).then(function(response){
@@ -291,7 +332,18 @@ angular.module('starter.controllers', [])
 
               icon: $scope.imagen 
           });
-         
+            
+          google.maps.event.addListener(marker, 'click', function(){
+               $scope.modal.show();
+                    $scope.data.title     = response.data.title_alert;
+                    $scope.data.body      = response.data.description_alert;  
+                    $scope.data.icono     = iconosLogo(response.data.category);  
+                    $scope.data.categoria = response.data.category;
+                    $scope.data.img       = "http://d3ustg7s7bf7i9.cloudfront.net/mmediafiles/pl/a7/a754599e-efe4-4a1d-a989-c022884b6908_749_499.jpg";
+
+                });
+               
+            
     });
     
       
@@ -396,9 +448,9 @@ angular.module('starter.controllers', [])
                   $cordovaImagePicker.getPictures(options)
                     .then(function (results) {
                       for (var i = 0; i < results.length; i++) {
-                       window.plugins.Base64.encodeFile(results[i], function(base64){
+                      /* window.plugins.Base64.encodeFile(results[i], function(base64){
                            $scope.alert.image_path_alert = base64;
-                       });
+                       });*/
                       }
                           $scope.modal.show();
     
@@ -484,7 +536,12 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('CatMapCtrl', function($scope, $stateParams, $cordovaGeolocation, $ionicPopup, $cordovaCamera, $ionicModal, $stateParams, $filter, Alerts) {
+.controller('CatMapCtrl', function($scope, $state, $stateParams, $cordovaGeolocation,  $ionicPopup, $cordovaCamera, $ionicModal, $cordovaSocialSharing, $filter, Alerts) {
+    
+        
+        $scope.goBack = function(){
+          $state.go('tab.categorias');
+        }
     
       $ionicModal.fromTemplateUrl('templates/modal-info.html', {
         scope: $scope
@@ -495,13 +552,6 @@ angular.module('starter.controllers', [])
       
       // Perform the login action when the user submits the login form
       $scope.doLogin = function() {
-        console.log('Doing login', $scope.alert.category);
-        Alerts.new($scope.alert).then(function(response){
-            $scope.modal.hide();
-            Mensaje("Registro exitoso",response.data.message);
-            $state.go('tab.recientes');
-        });
-        
           
       };
     
@@ -550,6 +600,17 @@ angular.module('starter.controllers', [])
             break;    
         }
     }
+    
+    $scope.twitterShare = function(){
+        $cordovaSocialSharing
+        .shareViaTwitter($scope.data.body+" via #enGeoy" , $scope.data.img , null)
+        .then(function(result) {
+          // Success!
+        }, function(err) {
+          // An error occurred. Show a message to the user
+        });
+    }
+    
     $scope.alerts = [];
     $scope.getAlerts = function(){
    Alerts.all().then(function(response){
@@ -590,6 +651,8 @@ angular.module('starter.controllers', [])
                     $scope.data.body      = response.data.description_alert;  
                     $scope.data.icono     = iconosLogo(response.data.category);  
                     $scope.data.categoria = response.data.category;
+                    $scope.data.img       = "http://d3ustg7s7bf7i9.cloudfront.net/mmediafiles/pl/a7/a754599e-efe4-4a1d-a989-c022884b6908_749_499.jpg";
+    
                 });
                
             });

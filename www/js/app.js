@@ -79,7 +79,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   .state('tab.catmap', {
       url: '/catmap/:cat',
       views: {
-        'tab-chats': {
+        'tab-account': {
           templateUrl: 'templates/categoria-map.html',
           controller: 'CatMapCtrl'
         }
