@@ -554,20 +554,30 @@ angular.module('starter.controllers', [])
 
                 map.mapTypes.set(customMapTypeId, customMapType);
                 map.setMapTypeId(customMapTypeId);
-
+       var markers = [];
        for(var j = 0;j< $scope.alerts.length;j++){
         
            $scope.imagen = iconos($scope.alerts[j].category);
            $scope.color  =  color($scope.alerts[j].category);
-           
-              var marker = new google.maps.Marker({
+              
+            markers[j] = new google.maps.Marker({
                   map: map,
                   animation: google.maps.Animation.DROP,
                   position: {lat: $scope.alerts[j].latitude_alert, lng: $scope.alerts[j].longitude_alert},
-                  icon: $scope.imagen 
+                  icon: $scope.imagen ,
+                  id:   $scope.alerts[j]._id,
+                  html: $scope.alerts[j]._id
               });
-
-
+           
+            
+            google.maps.event.addListener(markers[j], 'click', function(){
+               $scope.modal.show();
+                Alerts.get(this.id).then(function(response){
+                    $scope.data.title = response.data.title_alert;
+                    $scope.data.body  = response.data.description_alert;    
+                });
+               
+            });
                  var circle = new google.maps.Circle({
                      map: map,
                      radius: 100,    // 10 miles in metres
@@ -575,14 +585,8 @@ angular.module('starter.controllers', [])
                      strokeColor: $scope.color,//strokeColor : '#AA00FF',
                      strokeWidth: 5
                 });
-
-                marker.addListener('click', function(){
-                    $scope.data.title  =  j;
-                    $scope.modal.show();
-                });
-
            
-                circle.bindTo('center', marker, 'position');  
+                circle.bindTo('center', markers[j], 'position');  
          
        }
        
