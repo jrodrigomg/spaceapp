@@ -42,7 +42,7 @@ angular.module('starter.controllers', [])
 .controller('MapCtrl', function($scope, $stateParams, $cordovaGeolocation, $ionicPopup, $cordovaCamera) {
   var options = {timeout: 10000, enableHighAccuracy: true};
   
-    $scope.imagen = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+    $scope.imagen = 'img/agua-marker.png';
     
     function chooseOption(){
         var myPopup = $ionicPopup.show({
