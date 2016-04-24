@@ -7,6 +7,11 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
+
+//confiando en proxy
+.constant('ApiEndpoint', {
+ url: 'https://www.yeipp.com:3000'
+})
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -50,7 +55,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       }
     })
-    .state('tab.map', {
+
+   .state('tab.map', {
       url: '/map/:mapId',
       views: {
         'tab-chats': {
@@ -60,6 +66,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
+    .state('tab.add', {
+      url: '/add',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/add.html',
+          controller: 'AddCtrl'
+        }
+      }
+    })
+  
+  .state('tab.catmap', {
+      url: '/catmap/:cat',
+      views: {
+        'tab-chats': {
+          templateUrl: 'templates/categoria-map.html',
+          controller: 'CatMapCtrl'
+        }
+      }
+    })
+  
   .state('tab.categorias', {
     url: '/categorias',
     views: {
@@ -68,6 +94,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'CategoriasCtrl'
       }
     }
+     
   });
 
   // if none of the above states are matched, use this as the fallback
