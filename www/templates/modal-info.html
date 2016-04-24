@@ -3,7 +3,10 @@
     <h1 class="title">{{data.title}}</h1>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin()">
+    <form >
+    <div  class="category-icon-logo color-{{data.categoria}}">
+              <div class="icon-algins {{data.icono}}"></div>
+          </div>
       <img ng-src="http://d3ustg7s7bf7i9.cloudfront.net/mmediafiles/pl/a7/a754599e-efe4-4a1d-a989-c022884b6908_749_499.jpg" class="image-in-modal">
       <div class="card">
           <div class="item item-text-wrap">
@@ -11,7 +14,7 @@
           </div>
       </div>
         <center>
-        <div ng-click="modal.hide()">Cerrar</div>
+          <button style="width: 40%;" class="button button-block button-dark" ng-click="modal.hide()">Cerrar</button>
         </center>
     </form>
   </ion-content>

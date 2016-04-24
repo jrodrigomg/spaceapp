@@ -336,7 +336,11 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AddCtrl', function($scope, $stateParams, $cordovaGeolocation, $ionicPopup, $cordovaCamera, $cordovaImagePicker, $ionicModal, $state, Alerts) {
-    
+    $scope.goBack = function(){
+      $state.go('tab.recientes');
+    }
+
+
      function Mensaje(titulo, cuerpo){
         var myPopup = $ionicPopup.show({
             title:    titulo,
@@ -367,12 +371,7 @@ angular.module('starter.controllers', [])
             Mensaje("Registro exitoso",response.data.message);
             $state.go('tab.recientes');
         });
-        
-          
       };
-    
-    
-    
     
      Mensaje("Seleccionar ubicacion", "Seleccione la ubicacion del inciente");
     
@@ -524,6 +523,20 @@ angular.module('starter.controllers', [])
         }
     }
     
+    function iconosLogo(id){
+        switch(id){
+            case 2:
+                return 'ion-ios-paw';
+            break;
+            case 1:
+                return 'ion-waterdrop';
+            break;
+            case 3:
+                return 'fa fa-tree';
+            break;    
+        }
+    }
+
     function iconos(id){
         switch(id){
             case 2:
@@ -573,8 +586,10 @@ angular.module('starter.controllers', [])
             google.maps.event.addListener(markers[j], 'click', function(){
                $scope.modal.show();
                 Alerts.get(this.id).then(function(response){
-                    $scope.data.title = response.data.title_alert;
-                    $scope.data.body  = response.data.description_alert;    
+                    $scope.data.title     = response.data.title_alert;
+                    $scope.data.body      = response.data.description_alert;  
+                    $scope.data.icono     = iconosLogo(response.data.category);  
+                    $scope.data.categoria = response.data.category;
                 });
                
             });
