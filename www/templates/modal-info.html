@@ -1,0 +1,27 @@
+<ion-modal-view>
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">{{data.title}}</h1>
+  </ion-header-bar>
+  <ion-content>
+    <form >
+    <div  class="category-icon-logo color-{{data.categoria}}">
+              <div class="icon-algins {{data.icono}}"></div>
+          </div>
+      <img ng-src="{{data.img}}" class="image-in-modal">
+      <div class="card">
+          <div class="item item-text-wrap">
+            {{data.body}}
+          </div>
+      </div>
+        <center>
+          <button style="width: 40%;background-color: #d53535 !important;" class="button button-block button-dark" ng-click="modal.hide()">Cerrar</button>
+        </center>
+        <center>
+            Compartir via:
+            <div ng-click="twitterShare()" class="twitterlogo">
+              <div style="" class="icon-algins ion-social-twitter"></div>
+            </div>
+        </center>
+    </form>
+  </ion-content>
+</ion-modal-view>

@@ -1,5 +1,10 @@
 {
     "jscodehints.detectedExclusions": [
-        "/home/mige/rainbit/enGEOy/plugins/cordova-plugin-splashscreen/www/splashscreen.js"
+        "/home/mige/rainbit/enGEOy/plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+        "/home/mige/rainbit/REPO_enGEOy/spaceapp/platforms/android/build/intermediates/assets/debug/www/lib/ionic/js/ionic.bundle.js",
+        "/home/mige/rainbit/REPO_enGEOy/spaceapp/www/js/services.js",
+        "/home/mige/rainbit/REPO_enGEOy/spaceapp/platforms/android/build/intermediates/assets/debug/www/js/services.js",
+        "/home/mige/rainbit/REPO_enGEOy/spaceapp/www/js/app.js",
+        "/home/mige/rainbit/REPO_enGEOy/spaceapp/www/js/controllers.js"
     ]
 }

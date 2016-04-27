@@ -150,3 +150,23 @@ ion-tabs.tabs-color-active-positive .tab-item {
     text-align: center;
     margin-top: 11px;
 }
+
+.image-in-modal{
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 20px;
+}
+
+.twitterlogo{
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+    border-radius: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #d5d5d5;
+    color: white;
+    text-align: center;
+    background-color:#36d8ff !important;
+    position:relative !important;
+}

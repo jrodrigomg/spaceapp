@@ -1,4 +1,4 @@
-<ion-view view-title="Recientes">
+<ion-view view-title="Recientes" hide-tabs="false"  hide-nav-bar="false">
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="reciente in recientes" type="item-text-wrap" href="#/tab/map/{{reciente.id}}">
@@ -15,7 +15,7 @@
       </ion-item>
     </ion-list>
   </ion-content>
-    <div class="add-icon">
+    <div class="add-icon" ng-click="addinmap();">
         <div class="icon-add-style ion-plus-round"></div>
     </div> 
 </ion-view>
