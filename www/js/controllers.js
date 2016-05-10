@@ -339,7 +339,8 @@ angular.module('starter.controllers', [])
                     $scope.data.body      = response.data.description_alert;  
                     $scope.data.icono     = iconosLogo(response.data.category);  
                     $scope.data.categoria = response.data.category;
-                    $scope.data.img       = "http://d3ustg7s7bf7i9.cloudfront.net/mmediafiles/pl/a7/a754599e-efe4-4a1d-a989-c022884b6908_749_499.jpg";
+                    $scope.data.img       = response.data.image_path_alert;
+              //"http://d3ustg7s7bf7i9.cloudfront.net/mmediafiles/pl/a7/a754599e-efe4-4a1d-a989-c022884b6908_749_499.jpg";
 
                 });
                
@@ -387,7 +388,7 @@ angular.module('starter.controllers', [])
     
 })
 
-.controller('AddCtrl', function($scope, $stateParams, $cordovaGeolocation, $ionicPopup, $cordovaCamera, $cordovaImagePicker, $ionicModal, $state, Alerts) {
+.controller('AddCtrl', function($scope, $stateParams, $cordovaGeolocation, $ionicPopup, $cordovaCamera, $cordovaImagePicker, $ionicModal, $state, Alerts,$cordovaFileTransfer) {
     $scope.goBack = function(){
       $state.go('tab.recientes');
     }
@@ -419,6 +420,9 @@ angular.module('starter.controllers', [])
       $scope.doLogin = function() {
         console.log('Doing login', $scope.alert.category);
         Alerts.new($scope.alert).then(function(response){
+            console.log("MIID",response.data.id);
+            $scope.alertId = response.data.id;
+            $scope.testFileUpload();
             $scope.modal.hide();
             Mensaje("Registro exitoso",response.data.message);
             $state.go('tab.recientes');
@@ -430,6 +434,39 @@ angular.module('starter.controllers', [])
      var options = {timeout: 10000, enableHighAccuracy: true};
   
     $scope.imagen = 'img/agua-marker.png';
+    $scope.alertId = "";
+    
+    //-----------------------------------CONVERTIR BASE 64 TO PNG-------------------------------------------------
+    $scope.imagenupload = "img/agua-marker.png";
+    
+    $scope.testFileUpload = function () {
+     // Destination URL  antes 571c69db05b7b4e963d080d2
+     var url = "https://www.yeipp.com:3000/uploads/"+$scope.alertId;
+      
+     //File for Upload
+     var targetPath = $scope.imagenupload;
+      
+     // File name only
+     //var filename = targetPath.split("/").pop();
+      
+     var options = {
+            fileKey: "avatar",
+            fileName: "image.png",
+            chunkedMode: false,
+            mimeType: "image/png"
+          //params : {'directory':'upload', 'fileName':filename}
+      };
+           
+      $cordovaFileTransfer.upload(url, targetPath, options).then(function (result) {
+          console.log("SUCCESS: " + JSON.stringify(result.response));
+      }, function (err) {
+          console.log("ERROR: " + JSON.stringify(err));
+      }, function (progress) {
+          // PROGRESS HANDLING GOES HERE
+      });
+  };
+        
+    // ------------------------------------------------------------------------------------------------------------------------
     
     function chooseOption(){
         var myPopup = $ionicPopup.show({
@@ -448,6 +485,8 @@ angular.module('starter.controllers', [])
                   $cordovaImagePicker.getPictures(options)
                     .then(function (results) {
                       for (var i = 0; i < results.length; i++) {
+                          console.log(results[i]);
+                          $scope.imagenupload = results[i];
                       /* window.plugins.Base64.encodeFile(results[i], function(base64){
                            $scope.alert.image_path_alert = base64;
                        });*/
@@ -478,7 +517,24 @@ angular.module('starter.controllers', [])
                     
                   $cordovaCamera.getPicture(optionsCamera).then(function(imageData) {
                     $scope.alert.image_path_alert = "data:image/jpeg;base64," + imageData;
-                          $scope.modal.show();
+                             cordova.base64ToGallery(
+                                 imageData,
+
+                                  {
+                                      prefix: 'img_',
+                                      mediaScanner: true
+                                  },
+
+                                  function(msg) {
+                                      $scope.imagenupload = msg;
+                                      console.log(msg);
+                                  },
+
+                                  function(err) {
+                                      console.error(err);
+                                  }
+                          );    
+                            $scope.modal.show();
     
                     }, function(err) {
                       // error
@@ -651,7 +707,8 @@ angular.module('starter.controllers', [])
                     $scope.data.body      = response.data.description_alert;  
                     $scope.data.icono     = iconosLogo(response.data.category);  
                     $scope.data.categoria = response.data.category;
-                    $scope.data.img       = "http://d3ustg7s7bf7i9.cloudfront.net/mmediafiles/pl/a7/a754599e-efe4-4a1d-a989-c022884b6908_749_499.jpg";
+                    $scope.data.img       = response.data.image_path_alert;
+                        //"http://d3ustg7s7bf7i9.cloudfront.net/mmediafiles/pl/a7/a754599e-efe4-4a1d-a989-c022884b6908_749_499.jpg";
     
                 });
                
