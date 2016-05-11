@@ -10,7 +10,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 //confiando en proxy
 .constant('ApiEndpoint', {
- url: 'https://www.yeipp.com:3000'
+ url: 'https://www.yeipp.com:5030'
 })
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
